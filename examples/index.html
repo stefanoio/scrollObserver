@@ -1,0 +1,124 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>scrollObserver - examples</title>
+<style>
+body {
+	margin: 0;
+}
+h1,
+p {
+	padding: 0 1vw;
+}
+section {
+	padding: 50vh 0;
+	text-align: center;
+	width: 100%;
+	overflow: hidden;
+}
+section:first-of-type {
+	margin-top: 50vh;
+}
+img,
+video,
+progress {
+	max-width: 50%;
+}
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button {
+	opacity: 0;
+	pointer-events: none;
+	width: 5px;
+}
+.fade-in {
+	opacity: 0;
+}
+.grow {
+	transform: scale(0);
+}
+.the-end {
+	opacity: 0;
+	font-size: 3em;
+}
+</style>
+
+<h1><a href="https://github.com/stefanoio/scrollObserver">scrollObserver</a> examples</h1>
+<p>Video and still from Big Buck Bunny, (c) copyright 2008, Blender Foundation / <a href="http://www.bigbuckbunny.org">www.bigbuckbunny.org</a></p>
+<p>Scroll to make things happen 👇</p>
+<section>
+	<img src="contents/image.png" class="fade-in">
+</section>
+<section>
+	<img src="contents/image.png" class="grow">
+</section>
+<section>
+	<progress value="0" max="100"></progress>
+</section>
+<section style="text-align: left;">
+	<img src="contents/image.png" class="to-right">
+</section>
+<section style="text-align: right;">
+	<img src="contents/image.png" class="to-left">
+</section>
+<section>
+	<img src="contents/image.png" class="rotate">
+</section>
+<section>
+	<video src="contents/video.mp4" preload></video>
+</section>
+<section>
+	<p class="the-end">Fin.</p>
+	<p class="the-end">Now scroll back to top 👆</p>
+</section>
+
+<script src="../dist/scrollObserver.min.js"></script>
+<script>
+scrollObserver.observe(".fade-in", function(position) {
+	if(position < 0.6) {
+		this.style.opacity = position / 0.6;
+	} else {
+		this.style.opacity = 1;
+	}
+});
+
+scrollObserver.observe(".grow", function(position) {
+	if(position < 0.5) {
+		this.style.transform = "scale(" + (position * 2) + ")";
+	} else {
+		this.style.transform = "scale(" + (2 - position * 2) + ")";
+	}
+});
+
+scrollObserver.observe("progress", function(position) {
+	this.value = position * 100;
+});
+
+scrollObserver.observe(".to-right", function(position) {
+	this.style.transform = "translateX(" + (position * 100) + "vw)";
+});
+
+scrollObserver.observe(".to-left", function(position) {
+	this.style.transform = "translateX(-" + (position * 100) + "vw)";
+});
+
+scrollObserver.observe(".rotate", function(position) {
+	this.style.transform = "rotate(" + (position * 360) + "deg)";
+});
+
+scrollObserver.observe("video", function(position) {
+	this.currentTime = this.duration * position;
+});
+
+scrollObserver.observe(".the-end", function(position) {
+	if(position < 0.2) {
+		this.style.opacity = 0;
+	} else if(position < 0.7) {
+		this.style.opacity = (position - 0.2) / 0.5;
+		this.style.transform = "scale(" + ((position - 0.2) / 0.5) + ")";
+	} else {
+		this.style.opacity = 1;
+		this.style.transform = "none";
+	}
+});
+
+window.addEventListener("load", scrollObserver.refresh);
+</script>
