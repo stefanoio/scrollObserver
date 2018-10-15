@@ -12,7 +12,7 @@ scrollObserver come as a global `scrollObserver` object with three methods:
 
 `scrollObserver.refresh()` will recalculate page and elements dimensions (eg: to be used after DOM injections or asset loading).
 
-Here are some examples: http://stefanoio.github.io/scrollObserver/examples/ (no fancy stuff, just some demo of what you can do with scrollObserver, in fact your imagination is the limit)
+Here are some examples: https://stefano.io/scrollObserver/examples/ (no fancy stuff, just some demo of what you can do with scrollObserver, in fact your imagination is the limit)
 
 To build a minified version inside the dist folder you can use:
 ```
